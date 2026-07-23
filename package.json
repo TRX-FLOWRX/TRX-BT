@@ -48,7 +48,13 @@
     "ws": "^8.17.1",
     "ytdl-core": "^4.11.5",
     "yt-search": "^2.11.1",
-    "@hapi/joi": "^17.1.1"
+    "@hapi/joi": "^17.1.1",
+    "libsignal": "^6.0.0"
+  },
+  "overrides": {
+    "@whiskeysockets/baileys": {
+      "libsignal": "npm:libsignal@^6.0.0"
+    }
   },
   "devDependencies": {
     "nodemon": "^3.1.4"
