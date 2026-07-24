@@ -107,6 +107,17 @@ module.exports = {
         selfMode: false, // kalau true, bot hanya respon ke owner
     },
 
+    // ===== ANTI REPORT / ANTI RESTRICTION =====
+    anti: {
+        reportProtection: true,
+        repeatedMessagesThreshold: 2,
+        repeatedMessagesWindowMs: 120000,
+        maxRecipientMessagesPerMinute: 10,
+        maxDistinctRecipientsPerMinute: 25,
+        extraDelayMs: 1200,
+        highRiskRecipientDelayMs: 3000,
+    },
+
     // ===== WARNA TEMA TOGGLE (untuk tampilan menu) =====
     theme: {
         on: '『 🟢 』',

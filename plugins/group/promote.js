@@ -5,13 +5,13 @@ module.exports = {
     groupOnly: true,
     adminOnly: true,
     limitCost: 0,
-    execute: async (msg, { sock, jid }) => {
+    execute: async (msg, { sock, jid, args }) => {
         const mentioned = msg.message?.extendedTextMessage?.contextInfo?.mentionedJid;
         const quotedParticipant = msg.message?.extendedTextMessage?.contextInfo?.participant;
-        const targets = mentioned?.length ? mentioned : (quotedParticipant ? [quotedParticipant] : []);
+        const target = mentioned?.[0] || quotedParticipant || (args[0] ? `${args[0].replace(/\D/g, '')}@s.whatsapp.net` : null);
 
-        if (targets.length === 0) {
-            return sock.sendMessage(jid, { text: '📝 Tag atau reply user.\nContoh: *.promote @user*' }, { quoted: msg });
+        if (!target) {
+            return sock.sendMessage(jid, { text: '📝 Tag, reply, atau masukkan nomor.\nContoh: *.promote @user*' }, { quoted: msg });
         }
 
         try {
