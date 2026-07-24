@@ -20,6 +20,7 @@ const GROUP_TOGGLES = {
     'antilink': { label: 'Anti Link', key: 'antiLink' },
     'antispam': { label: 'Anti Spam', key: 'antiSpam' },
     'antitoxic': { label: 'Anti Kata Kasar', key: 'antiToxic' },
+    'nsfw': { label: 'NSFW Group Content', key: 'nsfw' },
     'game': { label: 'Game di Grup', key: 'gameEnabled' },
     'mute': { label: 'Mute Bot (owner only)', key: 'muted' },
 };

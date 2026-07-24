@@ -18,11 +18,13 @@ module.exports = {
         }
 
         const verifiedStatus = user.channelVerified ? '✅ Terverifikasi' : '⏳ Belum verifikasi';
+        const ageVerified = user.isVerified18 ? '✅ Terverifikasi 18+' : '⏳ Belum verifikasi 18+';
 
         const text = `╭─❍❁『 *PROFILE* 』❁❍\n`
             + `│ 👤 Nomor    : ${sender.split('@')[0]}\n`
             + `│ 📛 Nama     : ${user.name || '-'}\n`
             + `│ 📢 Channel  : ${verifiedStatus}\n`
+            + `│ 🔞 18+      : ${ageVerified}\n`
             + `│ 💎 Status   : ${premiumInfo}\n`
             + `│ ⚡ Limit    : ${user.dailyLimit}\n`
             + `│ 🎯 Level    : ${user.level}\n`
