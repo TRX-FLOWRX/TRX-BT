@@ -105,6 +105,7 @@ module.exports = {
         autoRead: false,
         autoTyping: false,
         selfMode: false, // kalau true, bot hanya respon ke owner
+        smartReply: true, // aktifkan AI Chat natural di DM saat .aichat on
     },
 
     // ===== ANTI REPORT / ANTI RESTRICTION =====

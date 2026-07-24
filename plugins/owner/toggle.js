@@ -6,6 +6,7 @@ const TOGGLE_SESSION_TTL = 2 * 60 * 1000;
 
 const GLOBAL_TOGGLES = {
     'aichat': { label: 'AI Chat Global', key: 'aiChat' },
+    'smartreply': { label: 'Smart Reply AI', key: 'smartReply' },
     'downloader': { label: 'Downloader', key: 'downloader' },
     'sticker': { label: 'Sticker Maker', key: 'sticker' },
     'autoread': { label: 'Auto Read Pesan', key: 'autoRead' },

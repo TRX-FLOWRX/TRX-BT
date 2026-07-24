@@ -33,7 +33,10 @@ module.exports = {
         // (config/prompts/default_system_prompt.txt) — owner bisa edit file
         // itu langsung tanpa sentuh kode, lalu .reload untuk apply perubahan.
         const user = userModel.getUser(sender);
-        const systemPrompt = user.aiPersona || loadSystemPrompt();
+        let systemPrompt = user.aiPersona || loadSystemPrompt();
+        if (user.activeAiPrompt) {
+            systemPrompt += `\n\n${user.activeAiPrompt}`;
+        }
 
         // maxTokens 1024 (bukan 1536/2048) — nilai lebih kecil untuk menaikkan
         // peluang GLM sukses di percobaan PERTAMA sebelum timeout 25 detik.
