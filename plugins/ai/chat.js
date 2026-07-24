@@ -20,6 +20,12 @@ module.exports = {
             return sock.sendMessage(jid, { text: '🚫 Fitur AI Chat sedang dimatikan oleh owner.' }, { quoted: msg });
         }
 
+        if (!config.ai.apiKey) {
+            return sock.sendMessage(jid, {
+                text: '❌ AI_API_KEY belum dikonfigurasi. Isi AI_API_KEY di file .env lalu restart bot.'
+            }, { quoted: msg });
+        }
+
         await sock.sendMessage(jid, { react: { text: '🤔', key: msg.key } });
 
         // Pakai persona custom user jika ada (diset lewat .persona), fallback

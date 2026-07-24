@@ -2,7 +2,7 @@ const userModel = require('../../lib/userModel');
 const moment = require('moment-timezone');
 
 module.exports = {
-    command: ['profile', 'me', 'status'],
+    command: ['profile', 'me', 'status', 'limit'],
     category: 'tools',
     description: 'Menampilkan profil dan status akun kamu',
     limitCost: 0,

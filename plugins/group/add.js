@@ -6,19 +6,21 @@ module.exports = {
     adminOnly: true,
     limitCost: 0,
     execute: async (msg, { sock, jid, args }) => {
-        const number = args[0]?.replace(/\D/g, '');
-        if (!number) {
-            return sock.sendMessage(jid, { text: '📝 Format: *.add <nomor>*\nContoh: .add 628123456789' }, { quoted: msg });
-        }
+        const mentioned = msg.message?.extendedTextMessage?.contextInfo?.mentionedJid;
+        const quotedParticipant = msg.message?.extendedTextMessage?.contextInfo?.participant;
+        const target = mentioned?.[0] || quotedParticipant || (args[0] ? `${args[0].replace(/\D/g, '')}@s.whatsapp.net` : null);
 
-        const target = `${number}@s.whatsapp.net`;
+        if (!target || !target.includes('@')) {
+            return sock.sendMessage(jid, { text: '📝 Format: *.add <nomor>* atau tag user\nContoh: .add 628123456789 atau .add @user' }, { quoted: msg });
+        }
 
         try {
             const result = await sock.groupParticipantsUpdate(jid, [target], 'add');
             const status = result[0]?.status;
+            const displayNumber = target.includes('@') ? target.split('@')[0] : target;
 
             if (status === '200') {
-                await sock.sendMessage(jid, { text: `✅ Berhasil menambahkan ${number}.` }, { quoted: msg });
+                await sock.sendMessage(jid, { text: `✅ Berhasil menambahkan ${displayNumber}.` }, { quoted: msg });
             } else {
                 await sock.sendMessage(jid, {
                     text: `⚠️ Tidak bisa menambahkan langsung (mungkin privasi user). Mengirim invite link sebagai gantinya jika memungkinkan.`
