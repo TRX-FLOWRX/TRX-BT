@@ -35,7 +35,9 @@ module.exports = {
         fallbackModel: process.env.AI_FALLBACK_MODEL || 'opc/deepseek-v4-flash-free',
         // Model khusus untuk fitur tambahan (bisa dioverride lewat .env jika alias berubah)
         ttsModel: process.env.AI_TTS_MODEL || 'mim/mimo-v2.5-tts',
+        ttsFallbackModel: process.env.AI_TTS_FALLBACK_MODEL || 'mim/mimo-v2.5-tts',
         sttModel: process.env.AI_STT_MODEL || 'mim/mimo-v2.5-asr',
+        sttFallbackModel: process.env.AI_STT_FALLBACK_MODEL || 'mim/mimo-v2.5-asr',
         imageModel: process.env.AI_IMAGE_MODEL || 'eve/gpt-image-2',
         // GLM-5.2 TIDAK memiliki kapabilitas vision (text-in/text-out saja).
         // Untuk fitur .analisagambar, dipakai model terpisah yang mendukung vision.
