@@ -29,6 +29,51 @@ module.exports = {
             return sock.sendMessage(jid, { text: '🚫 Fitur AI Chat sedang dimatikan oleh owner.' }, { quoted: msg });
         }
 
+        const urlMatch = text.trim().match(/^(?:image|video|url)\s+(.+)$/i);
+        const directLink = urlMatch ? urlMatch[1].trim() : text.trim();
+
+        const supportedImageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+        const supportedVideoExtensions = ['.mp4', '.mov', '.webm', '.mkv', '.avi'];
+
+        function getMediaTypeFromUrl(link) {
+            try {
+                const url = new URL(link);
+                const pathname = url.pathname.toLowerCase();
+                for (const ext of supportedImageExtensions) {
+                    if (pathname.endsWith(ext)) return 'image';
+                }
+                for (const ext of supportedVideoExtensions) {
+                    if (pathname.endsWith(ext)) return 'video';
+                }
+                return null;
+            } catch {
+                return null;
+            }
+        }
+
+        async function sendMediaByLink(link) {
+            const mediaType = getMediaTypeFromUrl(link);
+            if (!mediaType) {
+                return sock.sendMessage(jid, { text: '⚠️ Link tidak dikenali sebagai gambar atau video. Pastikan berakhiran .jpg/.png/.mp4/.webm, atau gunakan teks untuk konten generatif.' }, { quoted: msg });
+            }
+
+            const payload = mediaType === 'image'
+                ? { image: { url: link }, caption: '_Konten NSFW dikirim sesuai link yang disediakan._' }
+                : { video: { url: link }, caption: '_Konten NSFW dikirim sesuai link yang disediakan._' };
+
+            await sock.sendMessage(jid, payload, { quoted: msg });
+            await sock.sendMessage(jid, { react: { text: '✅', key: msg.key } });
+            return true;
+        }
+
+        const maybeMediaUrl = text.trim();
+        if (getMediaTypeFromUrl(maybeMediaUrl)) {
+            if (!config.ai.apiKey) {
+                return sock.sendMessage(jid, { text: '❌ AI_API_KEY belum dikonfirmasi, namun link media tetap bisa dikirim tanpa AI.' }, { quoted: msg });
+            }
+            return sendMediaByLink(maybeMediaUrl);
+        }
+
         if (!config.ai.apiKey) {
             return sock.sendMessage(jid, { text: '❌ AI_API_KEY belum dikonfigurasi. Isi AI_API_KEY di file .env lalu restart bot.' }, { quoted: msg });
         }
